@@ -1,19 +1,18 @@
 with open('../inputs/day3.txt') as f:
     bags = [line.rstrip() for line in f]
 
-dict = {}
+priority = {}
 
 
-def initDict():
+def createItemPriority():
     unicode = 97
     for i in range(1, 53):
-        dict.setdefault(chr(unicode), i)
-        if unicode == 122:
+        priority.setdefault(chr(unicode), i)
+        if unicode == 122:  # Reached lowercase z, switch to upper case A
             unicode = 65
         else:
             unicode = unicode + 1
-
-    print(f'dect: {dict}')
+    print(f'Item priorities: {priority}')
 
 
 def getDupItem(bag1, bag2):
@@ -27,12 +26,13 @@ def getDupItem2(bag1, bag2, bag3):
         if item in bag2 and item in bag3:
             return item
 
+
 def part1():
     total = 0
     for bag in bags:
         bag1, bag2 = bag[:len(bag) // 2], bag[len(bag) // 2:]
-        item = getDupItem(bag1, bag2)
-        total = total + dict[item]
+        dupItem = getDupItem(bag1, bag2)
+        total += priority[dupItem]
 
     print(f'Part1: {total}')
 
@@ -43,13 +43,13 @@ def part2():
         bag1 = bags.pop(0)
         bag2 = bags.pop(0)
         bag3 = bags.pop(0)
-        item = getDupItem2(bag1, bag2, bag3)
-        total = total + dict[item]
+        dupItem = getDupItem2(bag1, bag2, bag3)
+        total += priority[dupItem]
 
     print(f'Part2: {total}')
 
 
-initDict()
+createItemPriority()
 part1()
 part2()
 
