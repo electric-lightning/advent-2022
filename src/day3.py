@@ -11,7 +11,7 @@ def createItemPriority():
         if unicode == 122:  # Reached lowercase z, switch to upper case A
             unicode = 65
         else:
-            unicode = unicode + 1
+            unicode += 1
     print(f'Item priorities: {priority}')
 
 
@@ -40,9 +40,7 @@ def part1():
 def part2():
     total = 0
     while len(bags) > 0:
-        bag1 = bags.pop(0)
-        bag2 = bags.pop(0)
-        bag3 = bags.pop(0)
+        bag1, bag2, bag3 = bags.pop(), bags.pop(), bags.pop()
         dupItem = getDupItem2(bag1, bag2, bag3)
         total += priority[dupItem]
 
