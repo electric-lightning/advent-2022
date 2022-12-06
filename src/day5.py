@@ -1,7 +1,7 @@
 #
 # Cor blimey! That was intense after a hard day.
 #
-
+import copy
 import queue
 
 with open('../inputs/day5.txt') as f:
@@ -83,13 +83,14 @@ q9.put('R')
 q9.put('C')
 
 
-def part1():
+def part1n2(part):
     lookup = {'1': q1, '2': q2, '3': q3, '4': q4, '5': q5, '6': q6, '7': q7, '8': q8, '9': q9}
 
     for change in changes:
         n_to_txf, q_from, q_to = change.split(' ')
-        if n_to_txf == 1:
-            lookup[q_to].put(lookup[q_from].get())
+        if n_to_txf == '1' or part == 1:
+            for n in range(0, int(n_to_txf)):
+                lookup[q_to].put(lookup[q_from].get())
         else:
             flux = []
             for n in range(0, int(n_to_txf)):
@@ -100,9 +101,11 @@ def part1():
     topOfQ = ''
     for q in lookup.values():
         topOfQ += q.get()
-    print(f'Top of each queue: {topOfQ}')
+    print(f'Part{part} top of each queue: {topOfQ}')
 
 
-part1()
+part1n2(1)
+
+
 
 
