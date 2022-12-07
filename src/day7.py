@@ -67,19 +67,19 @@ def init_file_system():
     cwd = None
 
     for command in commands:
-        x = command.split()
+        cmd_parts = command.split()
         if command.find('$') >= 0:
             # command
-            op = x[1]
+            op = cmd_parts[1]
             if 'cd' == op:
-                path = x[2]
+                path = cmd_parts[2]
                 chdir(path)
-        elif 'dir' == x[0]:
+        elif 'dir' == cmd_parts[0]:
             # directory
-            cwd.contents.append(File(x[1], 0, True, cwd))
+            cwd.contents.append(File(cmd_parts[1], 0, True, cwd))
         else:
             # file
-            cwd.contents.append(File(x[1], int(x[0]), False, cwd))
+            cwd.contents.append(File(cmd_parts[1], int(cmd_parts[0]), False, cwd))
 
 
 def part1():
@@ -98,7 +98,7 @@ def part2():
     init_file_system()
 
     total_used = treewalk(root)
-    remaining = int(70000000)-total_used
+    remaining = 70000000-total_used
     required = 30000000
 
     delete_candidate = []
