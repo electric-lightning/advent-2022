@@ -1,6 +1,5 @@
 with open('../inputs/day8.txt') as f:
     tree_heights = [line.rstrip() for line in f]
-    #tree_heights = f.read().replace('\n', '')
 
 
 class Tree:
@@ -123,7 +122,7 @@ def part1():
 
 
 def part2():
-    # 2. visible trees from the edge
+    # 2. Best plot for tree house considering view dist
     view_distances = []
     for tree in forest:
         if tree.is_border_tree():
