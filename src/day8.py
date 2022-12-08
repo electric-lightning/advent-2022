@@ -1,4 +1,4 @@
-with open('../inputs/day8.txt') as f:
+with open('../inputs/day8.test') as f:
     tree_heights = [line.rstrip() for line in f]
     #tree_heights = f.read().replace('\n', '')
 
@@ -105,14 +105,3 @@ create_forest()
 part1()
 #part2()
 
-def part2():
-    # 2. visible trees from the edge
-    visible = 0
-    for tree in forest:
-        if tree.is_border_tree():
-            visible += 1
-            continue
-        else:
-            if is_visible(tree):
-                visible += 1
-    print(f'Part1. Trees in forest: {len(forest)}. Number visible from edge: {visible}')
