@@ -1,4 +1,4 @@
-with open('../inputs/day8.test') as f:
+with open('../inputs/day8.txt') as f:
     tree_heights = [line.rstrip() for line in f]
     #tree_heights = f.read().replace('\n', '')
 
@@ -52,6 +52,27 @@ def is_visible(tree):
     return False
 
 
+def get_vis_score_for_direction(neighbour_tree, direction, height, view_score):
+
+    if neighbour_tree.height >= height:
+        return view_score
+    elif neighbour_tree.height < height and neighbour_tree.is_border_tree():
+        return view_score
+    else:
+        # Not at edge, not blocked so check the next...
+        view_score += 1
+        return get_vis_score_for_direction(neighbour_tree.get_neighbour(direction), direction, height, view_score)
+
+
+def get_view_distance(tree):
+    directions = ['n', 's', 'e', 'w']
+    scores = []
+    for direction in directions:
+        scores.append(get_vis_score_for_direction(tree.get_neighbour(direction), direction, tree.height, 1))
+
+    return int(scores[0]) * int(scores[1]) * int(scores[2]) * int(scores[3])
+
+
 forest = []
 
 
@@ -101,7 +122,21 @@ def part1():
     print(f'Part1. Trees in forest: {len(forest)}. Number visible from edge: {visible}')
 
 
+def part2():
+    # 2. visible trees from the edge
+    view_distances = []
+    for tree in forest:
+        if tree.is_border_tree():
+            continue
+        else:
+            view_distances.append(get_view_distance(tree))
+
+    view_distances.sort(reverse=True)
+
+    print(f'Part2. Trees in forest: {len(forest)}. Score of tree with highest view distance: {view_distances[0]}')
+
+
 create_forest()
 part1()
-#part2()
+part2()
 
